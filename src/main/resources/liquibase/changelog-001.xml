@@ -8,5 +8,15 @@
 			    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
 			    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-	<include file="liquibase/changelog-001.xml" />
+	<changeSet id="001-001" author="Harry Dodson">
+		<comment>Adding user model</comment>
+		<createTable tableName="user_model">
+			<column name="id" autoIncrement="true" type="bigint">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="first_name" type="char(25)"/>
+			<column name="last_name" type="char(25)"/>
+		</createTable>
+	</changeSet>
+
 </databaseChangeLog>
