@@ -23,6 +23,17 @@
 hs_err_pid*
 replay_pid*
 
-/build
+# gradle
+.gradle/
+build/
+
+# jdtls, I think.
+.project
+.classpath
+.settings/
+
+# java
+bin/
+
+# idea
 .idea
-.gradle
