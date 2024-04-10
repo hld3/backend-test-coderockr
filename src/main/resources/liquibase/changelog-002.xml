@@ -15,8 +15,12 @@
 				<constraints primaryKey="true" />
 			</column>
 			<column name="parent_id" type="bigint" />
-			<column name="creation_date" type="bigint" />
-			<column name="amount" type="double" />
+			<column name="creation_date" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="amount" type="double">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 
