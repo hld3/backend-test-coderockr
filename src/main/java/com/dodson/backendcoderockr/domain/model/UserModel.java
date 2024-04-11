@@ -2,6 +2,10 @@ package com.dodson.backendcoderockr.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,17 +23,32 @@ public class UserModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "first_name", columnDefinition = "varchar(25)", nullable = false)
+	@JdbcTypeCode(SqlTypes.CHAR)
+	@Column(name = "user_id", nullable = false)
+	private UUID userId;
+
+	@Column(name = "first_name", length = 25, nullable = false)
 	private String firstName;
 	
-	@Column(name = "last_name", columnDefinition = "varchar(25)", nullable = false)
+	@Column(name = "last_name", length = 25, nullable = false)
 	private String lastName;
+
+	@Column(name = "creation_date")
+	private long creationDate;
 
 	@OneToMany(mappedBy = "parent")
 	private List<InvestmentModel> investments;
 
 	public Long getId() {
 		return id;
+	}
+	
+	public UUID getUserId() {
+		return userId;
+	}
+
+	public void setUserId(UUID userId) {
+		this.userId = userId;
 	}
 
 	public String getFirstName() {
@@ -46,6 +65,14 @@ public class UserModel {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public long getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(long creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public List<InvestmentModel> getInvestments() {
