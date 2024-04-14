@@ -86,4 +86,10 @@ public class UserModel {
 		investments.add(investment);
 		investment.setParent(this);
 	}
+
+	@Override
+	public String toString() {
+		return "UserModel [id=" + id + ", userId=" + userId + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", creationDate=" + creationDate + ", investments=" + investments + "]";
+	}
 }

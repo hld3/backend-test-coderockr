@@ -55,4 +55,9 @@ public class InvestmentModel {
 	public void setParent(UserModel parent) {
 		this.parent = parent;
 	}
+
+	@Override
+	public String toString() {
+		return "InvestmentModel [id=" + id + ", creationDate=" + creationDate + ", amount=" + amount + "]";
+	}
 }
