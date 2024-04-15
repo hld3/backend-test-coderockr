@@ -3,7 +3,6 @@ package com.dodson.backendcoderockr.service;
 import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 
 import java.util.UUID;
 
@@ -46,8 +45,8 @@ public class CreateUserServiceUnitTest {
 		UserModel savedUser = userCaptor.getValue();
 
 		assertNotNull(savedUser);
-		assertEquals("Harry", savedUser.getFirstName());
-		assertEquals("Dodson", savedUser.getLastName());
-		assertEquals(123L, savedUser.getCreationDate());
+		assertEquals(userDTO.getFirstName(), savedUser.getFirstName());
+		assertEquals(userDTO.getLastName(), savedUser.getLastName());
+		assertEquals(userDTO.getCreationDate(), savedUser.getCreationDate());
 	}
 }
