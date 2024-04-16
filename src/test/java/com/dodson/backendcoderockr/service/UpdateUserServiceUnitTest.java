@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.UUID;
 
-import org.h2.engine.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -17,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.dodson.backendcoderockr.domain.dto.UserDTO;
 import com.dodson.backendcoderockr.domain.model.UserModel;
+import com.dodson.backendcoderockr.domain.model.UserModelBuilder;
 import com.dodson.backendcoderockr.repository.UserRepository;
 
 public class UpdateUserServiceUnitTest {
@@ -40,11 +40,7 @@ public class UpdateUserServiceUnitTest {
 		userDTO.setLastName("Dodson");
 		userDTO.setCreationDate(123L);
 
-		UserModel userModel = new UserModel();
-		userModel.setUserId(userDTO.getUserId());
-		userModel.setFirstName("Wrong");
-		userModel.setLastName("Name");
-		userModel.setCreationDate(321L);
+		UserModel userModel = new UserModelBuilder().withUserId(userDTO.getUserId()).build();
 		when(userRepository.findByUserId(userDTO.getUserId())).thenReturn(userModel);
 
 		updateUserService.updateUser(userDTO);
