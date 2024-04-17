@@ -29,6 +29,9 @@ dependencies {
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("com.h2database:h2:2.2.224")
+	testImplementation("com.github.javafaker:javafaker:1.0.2") {
+		exclude(group = "org.yaml", module = "snakeyaml")
+	}
 }
 
 tasks.withType<Test> {

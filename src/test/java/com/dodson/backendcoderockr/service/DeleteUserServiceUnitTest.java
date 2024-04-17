@@ -5,8 +5,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -15,7 +13,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.dodson.backendcoderockr.domain.dto.UserDTO;
+import com.dodson.backendcoderockr.domain.dto.UserDTOBuilder;
 import com.dodson.backendcoderockr.domain.model.UserModel;
+import com.dodson.backendcoderockr.domain.model.UserModelBuilder;
 import com.dodson.backendcoderockr.repository.UserRepository;
 
 public class DeleteUserServiceUnitTest {
@@ -33,17 +33,8 @@ public class DeleteUserServiceUnitTest {
 
 	@Test
 	void test_whenUserExists_thenUserIsDeleted() {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setUserId(UUID.randomUUID());
-		userDTO.setFirstName("Harry");
-		userDTO.setLastName("Dodson");
-		userDTO.setCreationDate(123L);
-
-		UserModel userModel = new UserModel();
-		userModel.setUserId(UUID.randomUUID());
-		userModel.setFirstName("Wrong");
-		userModel.setLastName("Name");
-		userModel.setCreationDate(321L);
+		UserDTO userDTO = new UserDTOBuilder().build();
+		UserModel userModel = new UserModelBuilder().build();
 		when(userRepository.findByUserId(userDTO.getUserId())).thenReturn(userModel);
 
 		deleteUserService.deleteUser(userDTO);
@@ -60,11 +51,7 @@ public class DeleteUserServiceUnitTest {
 
 	@Test
 	void test_whenUserDoesNotExist_thenNothing() {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setUserId(UUID.randomUUID());
-		userDTO.setFirstName("Harry");
-		userDTO.setLastName("Dodson");
-		userDTO.setCreationDate(123L);
+		UserDTO userDTO = new UserDTOBuilder().build();
 		when(userRepository.findByUserId(userDTO.getUserId())).thenReturn(null);
 
 		deleteUserService.deleteUser(userDTO);

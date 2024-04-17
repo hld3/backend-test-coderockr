@@ -3,14 +3,13 @@ package com.dodson.backendcoderockr.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.dodson.backendcoderockr.domain.model.UserModel;
+import com.dodson.backendcoderockr.domain.model.UserModelBuilder;
 
 import jakarta.persistence.EntityManager;
 
@@ -26,12 +25,7 @@ public class UserRepositoryIntegrationTest {
 
 	@Test
 	public void test_saveUser() {
-		UserModel user = new UserModel();
-		// TODO make UserModel builder. 
-		user.setUserId(UUID.randomUUID());
-		user.setLastName("Dodson");
-		user.setFirstName("Harry");
-		user.setCreationDate(0L);
+		UserModel user = new UserModelBuilder().build();
 
 		userRepository.saveAndFlush(user);
 		entityManager.clear(); // force fetching a new instance of the user.
