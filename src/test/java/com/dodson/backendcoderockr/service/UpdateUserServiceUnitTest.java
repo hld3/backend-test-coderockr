@@ -12,8 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.dodson.backendcoderockr.domain.dto.UserDTO;
-import com.dodson.backendcoderockr.domain.dto.UserDTOBuilder;
+import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
+import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
 import com.dodson.backendcoderockr.domain.model.UserModel;
 import com.dodson.backendcoderockr.domain.model.UserModelBuilder;
 import com.dodson.backendcoderockr.repository.UserRepository;

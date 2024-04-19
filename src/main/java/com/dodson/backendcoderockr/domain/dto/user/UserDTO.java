@@ -1,4 +1,4 @@
-package com.dodson.backendcoderockr.domain.dto;
+package com.dodson.backendcoderockr.domain.dto.user;
 
 import java.util.UUID;
 
