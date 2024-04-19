@@ -2,7 +2,7 @@ package com.dodson.backendcoderockr.service;
 
 import org.springframework.stereotype.Service;
 
-import com.dodson.backendcoderockr.domain.dto.UserDTO;
+import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.model.UserModel;
 import com.dodson.backendcoderockr.repository.UserRepository;
 
