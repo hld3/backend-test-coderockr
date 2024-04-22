@@ -4,8 +4,11 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.NotNull;
+
 public class UserDTO {
 
+	@NotNull
 	@JsonProperty
 	private UUID userId;
 
@@ -17,6 +20,15 @@ public class UserDTO {
 
 	@JsonProperty
 	private long creationDate;
+
+	public UserDTO() {}
+
+	public UserDTO(UUID userId, String firstName, String lastName, long creationDate) {
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.creationDate = creationDate;
+	}
 
 	public UUID getUserId() {
 		return userId;
