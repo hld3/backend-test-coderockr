@@ -3,6 +3,7 @@ package com.dodson.backendcoderockr.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
@@ -49,5 +51,18 @@ public class UserControllerIntegrationTest {
 		assertEquals(result.getFirstName(), userDTO.getFirstName());
 		assertEquals(result.getLastName(), userDTO.getLastName());
 		assertEquals(result.getCreationDate(), userDTO.getCreationDate());
+	}
+
+	@Test
+	void test_whenSendingBadRequest_thenResponseShowsErrors() throws Exception {
+		UserDTO userDTO = new UserDTOBuilder().build();
+		userDTO.setUserId(null);
+
+		mockMvc.perform(post("/user/create")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(om.writeValueAsString(userDTO)))
+				.andExpect(status().isBadRequest())
+		.andExpect(content().json("{\"message\":null,\"userResult\":null,\"errors\":{\"userId\":\"must not be null\"}}"));
+
 	}
 }

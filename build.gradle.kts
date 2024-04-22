@@ -40,6 +40,9 @@ tasks.withType<Test> {
 
 tasks.test {
 	outputs.dir(project.extra["snippetsDir"]!!)
+	testLogging {
+		showStandardStreams = true
+	}
 }
 
 tasks.asciidoctor {

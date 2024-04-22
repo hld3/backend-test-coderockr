@@ -4,8 +4,11 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.NotNull;
+
 public class UserDTO {
 
+	@NotNull
 	@JsonProperty
 	private UUID userId;
 
