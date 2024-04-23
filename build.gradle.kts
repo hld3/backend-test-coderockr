@@ -1,5 +1,6 @@
 plugins {
 	java
+	checkstyle
 	id("org.springframework.boot") version "3.2.4"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.asciidoctor.jvm.convert") version "3.3.2"
@@ -36,6 +37,12 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<Checkstyle> {
+	configDirectory.set(file("src/main/resources/checkstyle"))
+	configFile = file("src/main/resources/checkstyle/checkstyle.xml")
+	ignoreFailures = false
 }
 
 tasks.test {
