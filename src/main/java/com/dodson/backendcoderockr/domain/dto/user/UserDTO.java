@@ -6,59 +6,120 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The user fields expected in the request.
+ */
 public class UserDTO {
 
-	@NotNull
-	@JsonProperty
-	private UUID userId;
+        /**
+         * The user id.
+         */
+        @NotNull
+        @JsonProperty
+        private UUID userId;
 
-	@JsonProperty
-	private String firstName;
+        /**
+         * The user first name.
+         */
+        @JsonProperty
+        private String firstName;
 
-	@JsonProperty
-	private String lastName;
+        /**
+         * the user last name.
+         */
+        @JsonProperty
+        private String lastName;
 
-	@JsonProperty
-	private long creationDate;
+        /**
+         * The user creation date.
+         */
+        @JsonProperty
+        private long creationDate;
 
-	public UserDTO() {}
+        /**
+         * Empty constructor.
+         */
+        public UserDTO() {
+        }
 
-	public UserDTO(UUID userId, String firstName, String lastName, long creationDate) {
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.creationDate = creationDate;
-	}
+        /**
+         * Constructor with all fields.
+         * @param theUserId the user id.
+         * @param theFirstName the first name.
+         * @param theLastName the last name.
+         * @param theCreationDate the creation date.
+         */
+        public UserDTO(final UUID theUserId,
+                        final String theFirstName,
+                        final String theLastName,
+                        final long theCreationDate) {
+                this.userId = theUserId;
+                this.firstName = theFirstName;
+                this.lastName = theLastName;
+                this.creationDate = theCreationDate;
+        }
 
-	public UUID getUserId() {
-		return userId;
-	}
+        /**
+         * Gets the user id.
+         * @return the user id.
+         */
+        public UUID getUserId() {
+                return userId;
+        }
 
-	public void setUserId(UUID userId) {
-		this.userId = userId;
-	}
+        /**
+         * Sets the user id.
+         * @param theUserId the user id to set to.
+         */
+        public void setUserId(final UUID theUserId) {
+                this.userId = theUserId;
+        }
 
-	public String getFirstName() {
-		return firstName;
-	}
+        /**
+         * Gets the first name of the user.
+         * @return the first name.
+         */
+        public String getFirstName() {
+                return firstName;
+        }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+        /**
+         * Sets the first name of the user.
+         * @param theFirstName the first name to set to.
+         */
+        public void setFirstName(final String theFirstName) {
+                this.firstName = theFirstName;
+        }
 
-	public String getLastName() {
-		return lastName;
-	}
+        /**
+         * Gets the last name of the user.
+         * @return the last name.
+         */
+        public String getLastName() {
+                return lastName;
+        }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+        /**
+         * Sets the last name of the user.
+         * @param theLastName the last name.
+         */
+        public void setLastName(final String theLastName) {
+                this.lastName = theLastName;
+        }
 
-	public long getCreationDate() {
-		return creationDate;
-	}
+        /**
+         * Gets the creation date of the user.
+         * @return the creation date.
+         */
+        public long getCreationDate() {
+                return creationDate;
+        }
 
-	public void setCreationDate(long creationDate) {
-		this.creationDate = creationDate;
-	}
+        /**
+         * Sets the creation date of the user.
+         * @param theCreationDate the creation date.
+         */
+        public void setCreationDate(final long theCreationDate) {
+                this.creationDate = theCreationDate;
+        }
 }
