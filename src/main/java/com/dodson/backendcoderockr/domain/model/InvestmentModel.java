@@ -12,52 +12,58 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "investment_model")
-public class InvestmentModel {
+public final class InvestmentModel {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private Long id;
 
-	@Column(name = "creation_date", nullable = false)
-	private long creationDate;
+        /**
+         * The investment creation date.
+         */
+        @Column(name = "creation_date", nullable = false)
+        private long creationDate;
 
-	@Column(name = "amount", nullable = false)
-	private double amount;
+        /**
+         * The investment amount.
+        */
+        @Column(name = "amount", nullable = false)
+        private double amount;
 
-	@ManyToOne
-	@JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "investment_user_fk"))
-	private UserModel parent;
+        @ManyToOne
+        @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "investment_user_fk"))
+        private UserModel parent;
 
-	public Long getId() {
-		return id;
-	}
+        public Long getId() {
+                return id;
+        }
 
-	public long getCreationDate() {
-		return creationDate;
-	}
+        public long getCreationDate() {
+                return creationDate;
+        }
 
-	public void setCreationDate(long creationDate) {
-		this.creationDate = creationDate;
-	}
+        public void setCreationDate(final long theCreationDate) {
+                this.creationDate = theCreationDate;
+        }
 
-	public double getAmount() {
-		return amount;
-	}
+        public double getAmount() {
+                return amount;
+        }
 
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
+        public void setAmount(final double theAmount) {
+                this.amount = theAmount;
+        }
 
-	public UserModel getParent() {
-		return parent;
-	}
+        public UserModel getParent() {
+                return parent;
+        }
 
-	public void setParent(UserModel parent) {
-		this.parent = parent;
-	}
+        public void setParent(final UserModel theParent) {
+                this.parent = theParent;
+        }
 
-	@Override
-	public String toString() {
-		return "InvestmentModel [id=" + id + ", creationDate=" + creationDate + ", amount=" + amount + "]";
-	}
+        @Override
+        public String toString() {
+                return "InvestmentModel [id=" + id + ", creationDate=" + creationDate + ", amount=" + amount + "]";
+        }
 }

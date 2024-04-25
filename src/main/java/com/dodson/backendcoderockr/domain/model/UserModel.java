@@ -17,79 +17,141 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user_model")
-public class UserModel {
+public final class UserModel {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+        /**
+         * The table primary key.
+         */
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private Long id;
 
-	@JdbcTypeCode(SqlTypes.CHAR)
-	@Column(name = "user_id", nullable = false)
-	private UUID userId;
+        /**
+         * The user id.
+         */
+        @JdbcTypeCode(SqlTypes.CHAR)
+        @Column(name = "user_id", nullable = false)
+        private UUID userId;
 
-	@Column(name = "first_name", length = 25, nullable = false)
-	private String firstName;
-	
-	@Column(name = "last_name", length = 25, nullable = false)
-	private String lastName;
+        /**
+         * The user first name.
+         */
+        @Column(name = "first_name", length = 25, nullable = false)
+        private String firstName;
 
-	@Column(name = "creation_date")
-	private long creationDate;
+        /**
+         * The user last name.
+         */
+        @Column(name = "last_name", length = 25, nullable = false)
+        private String lastName;
 
-	@OneToMany(mappedBy = "parent")
-	private List<InvestmentModel> investments;
+        /**
+         * The user creation date.
+         */
+        @Column(name = "creation_date")
+        private long creationDate;
 
-	public Long getId() {
-		return id;
-	}
-	
-	public UUID getUserId() {
-		return userId;
-	}
+        /**
+         * The collection of user investments.
+         */
+        @OneToMany(mappedBy = "parent")
+        private List<InvestmentModel> investments;
 
-	public void setUserId(UUID userId) {
-		this.userId = userId;
-	}
+        /**
+         * Gets the primary key for the user.
+         * @return the primary key for the user.
+         */
+        public Long getId() {
+                return id;
+        }
 
-	public String getFirstName() {
-		return firstName;
-	}
+        /**
+         * Gets the user UUID.
+         * @return the user UUID.
+         */
+        public UUID getUserId() {
+                return userId;
+        }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+        /**
+         * Sets the user id.
+         * @param theUserId the user id to set.
+         */
+        public void setUserId(final UUID theUserId) {
+                this.userId = theUserId;
+        }
 
-	public String getLastName() {
-		return lastName;
-	}
+        /**
+         * Gets the first name of the user.
+         * @return the first name.
+         */
+        public String getFirstName() {
+                return firstName;
+        }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+        /**
+         * Sets the first name of the user.
+         * @param theFirstName the first name to set.
+         */
+        public void setFirstName(final String theFirstName) {
+                this.firstName = theFirstName;
+        }
 
-	public long getCreationDate() {
-		return creationDate;
-	}
+        /**
+         * Gets the last name of the user.
+         * @return the last name.
+         */
+        public String getLastName() {
+                return lastName;
+        }
 
-	public void setCreationDate(long creationDate) {
-		this.creationDate = creationDate;
-	}
+        /**
+         * Sets the last name of the user.
+         * @param theLastName the last name to set.
+         */
+        public void setLastName(final String theLastName) {
+                this.lastName = theLastName;
+        }
 
-	public List<InvestmentModel> getInvestments() {
-		return investments;
-	}
+        /**
+         * Gets the creation date of the user.
+         * @return the creation date.
+         */
+        public long getCreationDate() {
+                return creationDate;
+        }
 
-	public void addInvestment(InvestmentModel investment) {
-		if (investments == null) {
-			investments = new ArrayList<>();
-		}
-		investments.add(investment);
-		investment.setParent(this);
-	}
+        /**
+         * Sets the creation date of the user.
+         * @param theCreationDate the creation date to set.
+         */
+        public void setCreationDate(final long theCreationDate) {
+                this.creationDate = theCreationDate;
+        }
 
-	@Override
-	public String toString() {
-		return "UserModel [id=" + id + ", userId=" + userId + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", creationDate=" + creationDate + ", investments=" + investments + "]";
-	}
+        /**
+         * Gets the investments of the user.
+         * @return the investments.
+         */
+        public List<InvestmentModel> getInvestments() {
+                return investments;
+        }
+
+        /**
+         * Add a single investment to the collection of investments of the user.
+         * @param investment the investment to add.
+         */
+        public void addInvestment(final InvestmentModel investment) {
+                if (investments == null) {
+                        investments = new ArrayList<>();
+                }
+                investments.add(investment);
+                investment.setParent(this);
+        }
+
+        @Override
+        public String toString() {
+                return "UserModel [id=" + id + ", userId=" + userId + ", firstName=" + firstName + ", lastName="
+                                + lastName + ", creationDate=" + creationDate + ", investments=" + investments + "]";
+        }
 }
