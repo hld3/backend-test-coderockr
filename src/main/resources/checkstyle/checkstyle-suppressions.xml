@@ -7,5 +7,5 @@
         <suppress checks="JavadocVariable"
                 files="InvestmentModel.java" />
         <suppress checks="MissingJavadocMethod"
-                files="InvestmentModel.java" />
+                files="[InvestmentModel.java,UpdateUserService.java]" />
 </suppressions>

@@ -9,16 +9,23 @@ import com.dodson.backendcoderockr.repository.UserRepository;
 @Service
 public class DeleteUserService {
 
-	private UserRepository userRepository;
+        /**
+         * Repository to connect to the database.
+         */
+        private UserRepository userRepository;
 
-	public DeleteUserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+        public DeleteUserService(final UserRepository theUserRepository) {
+                this.userRepository = theUserRepository;
+        }
 
-	public void deleteUser(UserDTO userDTO) {
-		UserModel userModel = userRepository.findByUserId(userDTO.getUserId());
-		if (userModel != null) {
-			userRepository.delete(userModel);
-		}
-	}
+        /**
+         * Deletes the user.
+         * @param userDTO the user to delete.
+         */
+        public void deleteUser(final UserDTO userDTO) {
+                UserModel userModel = userRepository.findByUserId(userDTO.getUserId());
+                if (userModel != null) {
+                        userRepository.delete(userModel);
+                }
+        }
 }
