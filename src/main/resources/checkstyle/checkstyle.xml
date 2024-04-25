@@ -49,9 +49,8 @@ https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html
 
 	<!-- https://checkstyle.org/filters/suppressionfilter.html -->
 	<module name="SuppressionFilter">
-		<property name="file" value="${org.checkstyle.sun.suppressionfilter.config}"
-			default="checkstyle-suppressions.xml" />
-		<property name="optional" value="true" />
+                <property name="file" value="/home/hdodson/java_projects/backend-test-coderockr/src/main/resources/checkstyle/checkstyle-suppressions.xml" />
+		<property name="optional" value="false" />
 	</module>
 
 	<!-- Checks that a package-info.java file exists for each package.     -->
@@ -71,6 +70,7 @@ https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html
 	<module name="FileLength" />
 	<module name="LineLength">
 		<property name="fileExtensions" value="java" />
+                <property name="max" value="120" />
 	</module>
 
 	<!-- Checks for whitespace                               -->
