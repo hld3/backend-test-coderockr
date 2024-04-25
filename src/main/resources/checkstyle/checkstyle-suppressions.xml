@@ -8,4 +8,8 @@
                 files="InvestmentModel.java" />
         <suppress checks="MissingJavadocMethod"
                 files="[InvestmentModel.java,UpdateUserService.java]" />
+        <suppress checks="HideUtilityClassConstructor"
+                files="BackendCoderockrApplication" />
+        <suppress checks="FinalParameters"
+                files="BackendCoderockrApplication" />
 </suppressions>
