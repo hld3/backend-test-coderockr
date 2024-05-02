@@ -1,6 +1,7 @@
-package com.dodson.backendcoderockr.controller;
+package com.dodson.backendcoderockr.exception;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,14 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.dodson.backendcoderockr.controller.UserController;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
 import com.dodson.backendcoderockr.service.CreateUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class UserControllerUnitTest {
+public class GlobalExceptionHandlerUnitTest {
 
-    private ObjectMapper om = new ObjectMapper();
     private MockMvc mockMvc;
 
     @Mock
@@ -29,18 +30,22 @@ public class UserControllerUnitTest {
     private UserController userController;
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController)
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .build();
     }
 
     @Test
-    void test_whenCreateUserEndpointIsHit_thenTheUserIsCreated() throws Exception {
+    void test_requestValidationError() throws Exception {
         UserDTO userDTO = new UserDTOBuilder().build();
+        userDTO.setUserId(null);
 
         mockMvc.perform(post("/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(userDTO)))
-                .andExpect(status().isOk());
+                .content(new ObjectMapper().writeValueAsString(userDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("{\"userId\":\"must not be null\"}"));
     }
 }
