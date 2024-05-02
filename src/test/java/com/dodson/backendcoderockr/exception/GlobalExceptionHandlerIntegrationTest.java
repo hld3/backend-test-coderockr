@@ -1,46 +1,47 @@
-package com.dodson.backendcoderockr.controller;
+package com.dodson.backendcoderockr.exception;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.dodson.backendcoderockr.controller.UserController;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
 import com.dodson.backendcoderockr.service.CreateUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class UserControllerUnitTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+public class GlobalExceptionHandlerIntegrationTest {
 
     private ObjectMapper om = new ObjectMapper();
+
+    @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private CreateUserService createUserService;
 
-    @InjectMocks
+    @MockBean
     private UserController userController;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
-    }
-
     @Test
-    void test_whenCreateUserEndpointIsHit_thenTheUserIsCreated() throws Exception {
+    public void test_requestValidationError() throws Exception {
         UserDTO userDTO = new UserDTOBuilder().build();
+        userDTO.setUserId(null);
 
         mockMvc.perform(post("/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(userDTO)))
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("{\"userId\":\"must not be null\"}"));
     }
 }
