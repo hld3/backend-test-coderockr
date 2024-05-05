@@ -20,42 +20,42 @@ import com.dodson.backendcoderockr.repository.UserRepository;
 
 public class DeleteUserServiceUnitTest {
 
-	@Mock
-	private UserRepository userRepository;
+    @Mock
+    private UserRepository userRepository;
 
-	@InjectMocks
-	private DeleteUserService deleteUserService;
+    @InjectMocks
+    private DeleteUserService deleteUserService;
 
-	@BeforeEach
-	private void init() {
-		MockitoAnnotations.openMocks(this);
-	}
+    @BeforeEach
+    private void init() {
+        MockitoAnnotations.openMocks(this);
+    }
 
-	@Test
-	void test_whenUserExists_thenUserIsDeleted() {
-		UserDTO userDTO = new UserDTOBuilder().build();
-		UserModel userModel = new UserModelBuilder().build();
-		when(userRepository.findByUserId(userDTO.getUserId())).thenReturn(userModel);
+    @Test
+    void test_whenUserExists_thenUserIsDeleted() {
+        UserDTO userDTO = new UserDTOBuilder().build();
+        UserModel userModel = new UserModelBuilder().build();
+        when(userRepository.findByUserId(userDTO.getUserId())).thenReturn(userModel);
 
-		deleteUserService.deleteUser(userDTO);
+        deleteUserService.deleteUser(userDTO);
 
-		ArgumentCaptor<UserModel> userCaptor = ArgumentCaptor.forClass(UserModel.class);
-		verify(userRepository).delete(userCaptor.capture());
-		UserModel deletedUser = userCaptor.getValue();
+        ArgumentCaptor<UserModel> userCaptor = ArgumentCaptor.forClass(UserModel.class);
+        verify(userRepository).delete(userCaptor.capture());
+        UserModel deletedUser = userCaptor.getValue();
 
-		assertEquals(userModel.getUserId(), deletedUser.getUserId());
-		assertEquals(userModel.getFirstName(), deletedUser.getFirstName());
-		assertEquals(userModel.getLastName(), deletedUser.getLastName());
-		assertEquals(userModel.getCreationDate(), deletedUser.getCreationDate());
-	}
+        assertEquals(userModel.getUserId(), deletedUser.getUserId());
+        assertEquals(userModel.getFirstName(), deletedUser.getFirstName());
+        assertEquals(userModel.getLastName(), deletedUser.getLastName());
+        assertEquals(userModel.getCreationDate(), deletedUser.getCreationDate());
+    }
 
-	@Test
-	void test_whenUserDoesNotExist_thenNothing() {
-		UserDTO userDTO = new UserDTOBuilder().build();
-		when(userRepository.findByUserId(userDTO.getUserId())).thenReturn(null);
+    @Test
+    void test_whenUserDoesNotExist_thenNothing() {
+        UserDTO userDTO = new UserDTOBuilder().build();
+        when(userRepository.findByUserId(userDTO.getUserId())).thenReturn(null);
 
-		deleteUserService.deleteUser(userDTO);
+        deleteUserService.deleteUser(userDTO);
 
-		verify(userRepository, never()).delete(null);
-	}
+        verify(userRepository, never()).delete(null);
+    }
 }

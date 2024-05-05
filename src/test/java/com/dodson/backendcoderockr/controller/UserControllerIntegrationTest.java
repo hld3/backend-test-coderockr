@@ -25,29 +25,29 @@ import jakarta.transaction.Transactional;
 @AutoConfigureMockMvc
 public class UserControllerIntegrationTest {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@Autowired
-	private ObjectMapper om;
+    @Autowired
+    private ObjectMapper om;
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Test
-	void test_whenSendingValidUser_thenUserIsCreated() throws Exception {
-		UserDTO userDTO = new UserDTOBuilder().build();
+    @Test
+    void test_whenSendingValidUser_thenUserIsCreated() throws Exception {
+        UserDTO userDTO = new UserDTOBuilder().build();
 
-		mockMvc.perform(post("/user/create")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(om.writeValueAsString(userDTO)))
-				.andExpect(status().isOk());
+        mockMvc.perform(post("/user/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(userDTO)))
+                .andExpect(status().isOk());
 
-		UserModel result = userRepository.findByUserId(userDTO.getUserId());
+        UserModel result = userRepository.findByUserId(userDTO.getUserId());
 
-		assertNotNull(result);
-		assertEquals(result.getFirstName(), userDTO.getFirstName());
-		assertEquals(result.getLastName(), userDTO.getLastName());
-		assertEquals(result.getCreationDate(), userDTO.getCreationDate());
-	}
+        assertNotNull(result);
+        assertEquals(result.getFirstName(), userDTO.getFirstName());
+        assertEquals(result.getLastName(), userDTO.getLastName());
+        assertEquals(result.getCreationDate(), userDTO.getCreationDate());
+    }
 }

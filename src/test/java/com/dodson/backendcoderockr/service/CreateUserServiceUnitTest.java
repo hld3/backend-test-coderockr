@@ -19,38 +19,38 @@ import com.dodson.backendcoderockr.repository.UserRepository;
 
 public class CreateUserServiceUnitTest {
 
-	@Mock
-	private UserRepository userRepository;
+    @Mock
+    private UserRepository userRepository;
 
-	@InjectMocks
-	private CreateUserService createUserService;
+    @InjectMocks
+    private CreateUserService createUserService;
 
-	@BeforeEach
-	void setUp() {
-		MockitoAnnotations.openMocks(this);
-	}
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
-	@Test
-	void test_whenCreatingUser_thenUserIsSaved() {
-		UserDTO userDTO = new UserDTOBuilder().build();
-		UserModel userModel = userDtoToModel(userDTO);
-		UserResult result = createUserService.createNewUser(userDTO);
-		when(userRepository.save(userModel)).thenReturn(userModel);
+    @Test
+    void test_whenCreatingUser_thenUserIsSaved() {
+        UserDTO userDTO = new UserDTOBuilder().build();
+        UserModel userModel = userDtoToModel(userDTO);
+        UserResult result = createUserService.createNewUser(userDTO);
+        when(userRepository.save(userModel)).thenReturn(userModel);
 
-		UserDTO savedUser = result.getUserDTO();
-		assertNotNull(savedUser);
-		assertEquals(userDTO.getFirstName(), savedUser.getFirstName());
-		assertEquals(userDTO.getLastName(), savedUser.getLastName());
-		assertEquals(userDTO.getCreationDate(), savedUser.getCreationDate());
-		assertEquals(UserStatus.CREATED, result.getUserStatus());
-	}
+        UserDTO savedUser = result.getUserDTO();
+        assertNotNull(savedUser);
+        assertEquals(userDTO.getFirstName(), savedUser.getFirstName());
+        assertEquals(userDTO.getLastName(), savedUser.getLastName());
+        assertEquals(userDTO.getCreationDate(), savedUser.getCreationDate());
+        assertEquals(UserStatus.CREATED, result.getUserStatus());
+    }
 
-	private UserModel userDtoToModel(UserDTO userDTO) {
-		UserModel um = new UserModel();
-		um.setUserId(userDTO.getUserId());
-		um.setFirstName(userDTO.getFirstName());
-		um.setLastName(userDTO.getLastName());
-		um.setCreationDate(userDTO.getCreationDate());
-		return um;
-	}
+    private UserModel userDtoToModel(final UserDTO userDTO) {
+        UserModel um = new UserModel();
+        um.setUserId(userDTO.getUserId());
+        um.setFirstName(userDTO.getFirstName());
+        um.setLastName(userDTO.getLastName());
+        um.setCreationDate(userDTO.getCreationDate());
+        return um;
+    }
 }

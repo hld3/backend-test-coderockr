@@ -24,6 +24,6 @@
         files="BackendCoderockrApplication.java" />
 
     <!-- Suppressed for all tests and builders -->
-    <suppress checks="JavadocVariable|DesignForExtension|JavadocPackage|MagicNumber"
-        files=".*Test\.java|.*Builder\.java" />
+    <suppress checks="JavadocVariable|DesignForExtension|JavadocPackage|MagicNumber|MissingJavadocMethod"
+        files=".*Test\.java|.*Builder\.java|BackendCoderockrApplicationTests.java" />
 </suppressions>
