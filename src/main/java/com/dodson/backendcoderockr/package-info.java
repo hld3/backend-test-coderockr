@@ -1,5 +1,4 @@
 /**
- * Backend test project.
+ * The application.
  */
 package com.dodson.backendcoderockr;
-

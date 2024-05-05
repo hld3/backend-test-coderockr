@@ -17,24 +17,24 @@ import jakarta.persistence.EntityManager;
 @ActiveProfiles("h2")
 public class UserRepositoryIntegrationTest {
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Test
-	public void test_saveUser() {
-		UserModel user = new UserModelBuilder().build();
+    @Test
+    public void test_saveUser() {
+        UserModel user = new UserModelBuilder().build();
 
-		userRepository.saveAndFlush(user);
-		entityManager.clear(); // force fetching a new instance of the user.
+        userRepository.saveAndFlush(user);
+        entityManager.clear(); // force fetching a new instance of the user.
 
-		UserModel savedUser = userRepository.findByUserId(user.getUserId());
-		assertNotNull(savedUser);
-		assertEquals(savedUser.getUserId(), user.getUserId());
-		assertEquals(savedUser.getLastName(), user.getLastName());
-		assertEquals(savedUser.getFirstName(), user.getFirstName());
-		assertEquals(savedUser.getCreationDate(), user.getCreationDate());
-	}
+        UserModel savedUser = userRepository.findByUserId(user.getUserId());
+        assertNotNull(savedUser);
+        assertEquals(savedUser.getUserId(), user.getUserId());
+        assertEquals(savedUser.getLastName(), user.getLastName());
+        assertEquals(savedUser.getFirstName(), user.getFirstName());
+        assertEquals(savedUser.getCreationDate(), user.getCreationDate());
+    }
 }

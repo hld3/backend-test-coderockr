@@ -1,15 +1,29 @@
 <?xml version="1.0"?>
 <!DOCTYPE suppressions PUBLIC "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN" "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
-        <suppress checks="MagicNumber"
-                files="UserModel.java"
-                lines="39,45" />
-        <suppress checks="JavadocVariable"
-                files="InvestmentModel.java" />
-        <suppress checks="MissingJavadocMethod"
-                files="[InvestmentModel.java,UpdateUserService.java]" />
-        <suppress checks="HideUtilityClassConstructor"
-                files="BackendCoderockrApplication" />
-        <suppress checks="FinalParameters"
-                files="BackendCoderockrApplication" />
+    <!-- Different versions for the checks between main and test -->
+    <suppress files="[\\/]src[\\/]test[\\/].*" id="MethodNameReg" />
+    <suppress files="[\\/]src[\\/]main[\\/].*" id="MethodNameTest" />
+
+    <suppress checks="MagicNumber"
+        files="UserModel.java"
+        lines="39,45" />
+    <suppress checks="JavadocVariable"
+        files="InvestmentModel.java" />
+    <suppress checks="MissingJavadocMethod"
+        files="BackendCoderockrApplication.java|InvestmentModel.java" />
+    <suppress checks="MissingJavadocMethod"
+        files="UpdateUserService.java"
+        lines="17" />
+    <suppress checks="MissingJavadocMethod"
+        files="DeleteUserService.java"
+        lines="17" />
+    <suppress checks="HideUtilityClassConstructor"
+        files="BackendCoderockrApplication.java" />
+    <suppress checks="FinalParameters"
+        files="BackendCoderockrApplication.java" />
+
+    <!-- Suppressed for all tests and builders -->
+    <suppress checks="JavadocVariable|DesignForExtension|JavadocPackage|MagicNumber|MissingJavadocMethod"
+        files=".*Test\.java|.*Builder\.java|BackendCoderockrApplicationTests.java" />
 </suppressions>
