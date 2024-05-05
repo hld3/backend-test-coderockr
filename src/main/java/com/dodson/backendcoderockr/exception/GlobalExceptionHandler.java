@@ -19,6 +19,11 @@ public class GlobalExceptionHandler {
      */
     private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    /**
+     * Catches any request validation errors.
+     * @param exception the {@MethodArgumentNotValidException}.
+     * @return {@ResponseEntity} with the validation errors.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public final ResponseEntity<Map<String, String>> requestValidationError(
             final MethodArgumentNotValidException exception) {
