@@ -18,30 +18,31 @@ import jakarta.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
 
-        /**
-         * Logger for the class.
-         */
-        private Logger logger = LoggerFactory.getLogger(UserController.class);
+    /**
+     * Logger for the class.
+     */
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
 
-        /**
-         * The service to create a user to save to the database.
-         */
-        private CreateUserService createUserService;
+    /**
+     * The service to create a user to save to the database.
+     */
+    private CreateUserService createUserService;
 
-        UserController(final CreateUserService theCreateUserService) {
-                this.createUserService = theCreateUserService;
-        }
+    UserController(final CreateUserService theCreateUserService) {
+        this.createUserService = theCreateUserService;
+    }
 
-        /**
-         * Method to construct a new user.
-         * @param userDTO the user DTO from the request body.
-         * @return the {@link UserResponse} result.
-         */
-        @PostMapping("/create")
-        public final ResponseEntity<UserResponse> createNewUser(@Valid @RequestBody final UserDTO userDTO) {
-                logger.info("Creating new user: " + userDTO);
-                UserResponse response = new UserResponse();
-                response.setUserResult(createUserService.createNewUser(userDTO));
-                return ResponseEntity.ok(response);
-        }
+    /**
+     * Method to construct a new user.
+     * @param userDTO the user DTO from the request body.
+     * @return the {@link UserResponse} result.
+     */
+    @PostMapping("/create")
+    public final ResponseEntity<UserResponse> createNewUser(@Valid @RequestBody final UserDTO userDTO) {
+        logger.info("Creating new user: " + userDTO.getUserId());
+        UserResponse response = new UserResponse();
+        response.setUserResult(createUserService.createNewUser(userDTO));
+        logger.info("New user created: " + userDTO.getUserId());
+        return ResponseEntity.ok(response);
+    }
 }
