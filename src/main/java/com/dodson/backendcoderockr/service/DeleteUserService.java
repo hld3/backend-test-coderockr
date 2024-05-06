@@ -1,5 +1,7 @@
 package com.dodson.backendcoderockr.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
@@ -9,23 +11,30 @@ import com.dodson.backendcoderockr.repository.UserRepository;
 @Service
 public class DeleteUserService {
 
-        /**
-         * Repository to connect to the database.
-         */
-        private UserRepository userRepository;
+    /**
+     * Logger for the service.
+     */
+    private Logger logger = LoggerFactory.getLogger(DeleteUserService.class);
 
-        public DeleteUserService(final UserRepository theUserRepository) {
-                this.userRepository = theUserRepository;
-        }
+    /**
+     * Repository to connect to the database.
+     */
+    private UserRepository userRepository;
 
-        /**
-         * Deletes the user.
-         * @param userDTO the user to delete.
-         */
-        public void deleteUser(final UserDTO userDTO) {
-                UserModel userModel = userRepository.findByUserId(userDTO.getUserId());
-                if (userModel != null) {
-                        userRepository.delete(userModel);
-                }
+    public DeleteUserService(final UserRepository theUserRepository) {
+        this.userRepository = theUserRepository;
+    }
+
+    /**
+     * Deletes the user.
+     * @param userDTO the user to delete.
+     */
+    public void deleteUser(final UserDTO userDTO) {
+        UserModel userModel = userRepository.findByUserId(userDTO.getUserId());
+        if (userModel != null) {
+            userRepository.delete(userModel);
+        } else {
+            logger.info("User not found for deletion: " + userDTO.getUserId());
         }
+    }
 }
