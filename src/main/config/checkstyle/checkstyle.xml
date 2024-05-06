@@ -50,7 +50,7 @@ https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html
     <!-- https://checkstyle.org/filters/suppressionfilter.html -->
     <module name="SuppressionFilter">
         <property name="file"
-            value="/home/hdodson/java_projects/backend-test-coderockr/src/main/resources/checkstyle/checkstyle-suppressions.xml" />
+            value="${config_loc}/checkstyle-suppressions.xml" />
         <property name="optional" value="false" />
     </module>
 
