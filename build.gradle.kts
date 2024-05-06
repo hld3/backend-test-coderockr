@@ -40,8 +40,8 @@ tasks.withType<Test> {
 }
 
 tasks.withType<Checkstyle> {
-	configDirectory.set(file("src/main/resources/checkstyle"))
-	configFile = file("src/main/resources/checkstyle/checkstyle.xml")
+	configDirectory.set(file("src/main/config/checkstyle"))
+	configFile = file("src/main/config/checkstyle/checkstyle.xml")
 	ignoreFailures = false
 }
 
