@@ -21,4 +21,9 @@ public class UserDTOBuilder {
         userDTO.setCreationDate(creationDate);
         return userDTO;
     }
+
+    public UserDTOBuilder withUserId(UUID theUserId) {
+        this.userId = theUserId;
+        return this;
+    }
 }
