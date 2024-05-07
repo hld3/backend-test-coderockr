@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.response.UserResponse;
 import com.dodson.backendcoderockr.service.CreateUserService;
+import com.dodson.backendcoderockr.service.UpdateUserService;
 
 import jakarta.validation.Valid;
 
@@ -28,8 +29,14 @@ public class UserController {
      */
     private CreateUserService createUserService;
 
-    UserController(final CreateUserService theCreateUserService) {
+    /**
+     * The service to update a user in the database.
+     */
+    private UpdateUserService updateUserService;
+
+    UserController(final CreateUserService theCreateUserService, final UpdateUserService theUpdateUserService) {
         this.createUserService = theCreateUserService;
+        this.updateUserService = theUpdateUserService;
     }
 
     /**
@@ -43,6 +50,15 @@ public class UserController {
         UserResponse response = new UserResponse();
         response.setUserResult(createUserService.createNewUser(userDTO));
         logger.info("New user created: " + userDTO.getUserId());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/update")
+    public final ResponseEntity<UserResponse> updateNewUser(@Valid @RequestBody final UserDTO userDTO) {
+        logger.info("Updating user: " + userDTO.getUserId());
+        UserResponse response = new UserResponse();
+        response.setUserResult(updateUserService.updateUser(userDTO));
+        logger.info("User updated: " + userDTO.getUserId());
         return ResponseEntity.ok(response);
     }
 }

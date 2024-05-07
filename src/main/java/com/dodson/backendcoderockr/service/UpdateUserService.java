@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
+import com.dodson.backendcoderockr.domain.dto.user.status.UserResult;
+import com.dodson.backendcoderockr.domain.dto.user.status.UserStatus;
 import com.dodson.backendcoderockr.domain.model.UserModel;
 import com.dodson.backendcoderockr.repository.UserRepository;
 
@@ -26,10 +28,11 @@ public class UpdateUserService {
     }
 
     /**
-     * Updates the user. A new user is created if the user in the DTO does not exist.
+     * Updates the user. A new user is created if the user in the DTO does not
+     * exist.
      * @param userDTO the user data to update the user with.
      */
-    public void updateUser(final UserDTO userDTO) {
+    public UserResult updateUser(final UserDTO userDTO) {
         UserModel toUpdate = userRepository.findByUserId(userDTO.getUserId());
         if (toUpdate != null) {
             toUpdate.setFirstName(userDTO.getFirstName());
@@ -44,5 +47,9 @@ public class UpdateUserService {
             newUser.setCreationDate(userDTO.getCreationDate());
             userRepository.save(newUser);
         }
+        UserResult result = new UserResult();
+        result.setUserDTO(userDTO);
+        result.setUserStatus(UserStatus.UPDATED);
+        return result;
     }
 }

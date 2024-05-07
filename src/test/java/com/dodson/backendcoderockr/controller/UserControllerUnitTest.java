@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
 import com.dodson.backendcoderockr.service.CreateUserService;
+import com.dodson.backendcoderockr.service.UpdateUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserControllerUnitTest {
@@ -24,6 +25,9 @@ public class UserControllerUnitTest {
 
     @Mock
     private CreateUserService createUserService;
+
+    @Mock
+    private UpdateUserService updateUserService;
 
     @InjectMocks
     private UserController userController;
@@ -39,6 +43,16 @@ public class UserControllerUnitTest {
         UserDTO userDTO = new UserDTOBuilder().build();
 
         mockMvc.perform(post("/user/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(userDTO)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void test_whenSendingValidUser_thenUserIsUpdated() throws Exception {
+        UserDTO userDTO = new UserDTOBuilder().build();
+
+        mockMvc.perform(post("/user/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(userDTO)))
                 .andExpect(status().isOk());
