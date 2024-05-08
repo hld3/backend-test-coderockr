@@ -35,10 +35,13 @@ public class UpdateUserService {
      */
     public UserResult updateUser(final UserDTO userDTO) {
         UserModel toUpdate = userRepository.findByUserId(userDTO.getUserId());
+        UserResult result = new UserResult();
+
         if (toUpdate != null) {
             toUpdate.setFirstName(userDTO.getFirstName());
             toUpdate.setLastName(userDTO.getLastName());
             userRepository.save(toUpdate);
+            result.setMessage("User was updated successfully.");
         } else {
             logger.info("Could not update, the user does not exist. Creating new user: " + userDTO.getUserId());
             UserModel newUser = new UserModel();
@@ -47,9 +50,9 @@ public class UpdateUserService {
             newUser.setLastName(userDTO.getLastName());
             newUser.setCreationDate(userDTO.getCreationDate());
             userRepository.save(newUser);
+            result.setMessage("User did not exist, a new user was created.");
         }
 
-        UserResult result = new UserResult();
         result.setUserDTO(userDTO);
         result.setUserStatus(UserStatus.UPDATED);
         return result;
