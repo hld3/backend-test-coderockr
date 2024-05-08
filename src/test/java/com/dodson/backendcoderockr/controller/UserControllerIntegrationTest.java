@@ -2,6 +2,8 @@ package com.dodson.backendcoderockr.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -11,11 +13,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
+import com.dodson.backendcoderockr.domain.dto.user.status.UserResult;
+import com.dodson.backendcoderockr.domain.dto.user.status.UserStatus;
 import com.dodson.backendcoderockr.domain.model.UserModel;
 import com.dodson.backendcoderockr.domain.model.UserModelBuilder;
+import com.dodson.backendcoderockr.domain.response.UserResponse;
 import com.dodson.backendcoderockr.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,6 +52,7 @@ public class UserControllerIntegrationTest {
 
         UserModel result = userRepository.findByUserId(userDTO.getUserId());
 
+        // TODO should check the response for the UserResult.
         assertNotNull(result);
         assertEquals(result.getFirstName(), userDTO.getFirstName());
         assertEquals(result.getLastName(), userDTO.getLastName());
@@ -68,6 +75,7 @@ public class UserControllerIntegrationTest {
 
         UserModel result = userRepository.findByUserId(updated.getUserId());
 
+        // TODO should check the response for the UserResult.
         assertNotNull(result);
         assertEquals(result.getFirstName(), updated.getFirstName());
         assertEquals(result.getLastName(), updated.getLastName());
@@ -85,9 +93,32 @@ public class UserControllerIntegrationTest {
 
         UserModel result = userRepository.findByUserId(updated.getUserId());
 
+        // TODO should check the response for the UserResult.
         assertNotNull(result);
         assertEquals(result.getFirstName(), updated.getFirstName());
         assertEquals(result.getLastName(), updated.getLastName());
         assertEquals(result.getCreationDate(), updated.getCreationDate());
+    }
+
+    @Test
+    void test_whenSentUserToDelete_thenTheUserIsDeleted() throws Exception {
+        UserDTO originalDTO = new UserDTOBuilder().build();
+        UserModel saveModel = new UserModelBuilder().withAllFields(originalDTO.getUserId(), originalDTO.getFirstName(),
+                originalDTO.getLastName(), originalDTO.getCreationDate()).build();
+        userRepository.saveAndFlush(saveModel);
+
+        MvcResult mvcResult = mockMvc.perform(delete("/user/delete")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(originalDTO)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        UserModel deletedUser = userRepository.findByUserId(originalDTO.getUserId());
+        assertNull(deletedUser);
+
+        UserResponse userResponse = om.readValue(mvcResult.getResponse().getContentAsString(), UserResponse.class);
+        UserResult userResult = userResponse.getUserResult();
+        assertEquals(userResult.getUserStatus(), UserStatus.DELETED);
+        assertEquals(userResult.getUserDTO(), originalDTO);
     }
 }

@@ -22,7 +22,7 @@ public class UserDTOBuilder {
         return userDTO;
     }
 
-    public UserDTOBuilder withUserId(UUID theUserId) {
+    public UserDTOBuilder withUserId(final UUID theUserId) {
         this.userId = theUserId;
         return this;
     }

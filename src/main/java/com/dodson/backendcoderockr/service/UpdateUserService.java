@@ -31,6 +31,7 @@ public class UpdateUserService {
      * Updates the user. A new user is created if the user in the DTO does not
      * exist.
      * @param userDTO the user data to update the user with.
+     * @return the {@UserResult}.
      */
     public UserResult updateUser(final UserDTO userDTO) {
         UserModel toUpdate = userRepository.findByUserId(userDTO.getUserId());
@@ -47,6 +48,7 @@ public class UpdateUserService {
             newUser.setCreationDate(userDTO.getCreationDate());
             userRepository.save(newUser);
         }
+
         UserResult result = new UserResult();
         result.setUserDTO(userDTO);
         result.setUserStatus(UserStatus.UPDATED);

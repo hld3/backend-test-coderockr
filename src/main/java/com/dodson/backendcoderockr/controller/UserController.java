@@ -3,6 +3,7 @@ package com.dodson.backendcoderockr.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.response.UserResponse;
 import com.dodson.backendcoderockr.service.CreateUserService;
+import com.dodson.backendcoderockr.service.DeleteUserService;
 import com.dodson.backendcoderockr.service.UpdateUserService;
 
 import jakarta.validation.Valid;
@@ -34,9 +36,16 @@ public class UserController {
      */
     private UpdateUserService updateUserService;
 
-    UserController(final CreateUserService theCreateUserService, final UpdateUserService theUpdateUserService) {
+    /**
+     * The service to delete a user in the database.
+     */
+    private DeleteUserService deleteUserService;
+
+    UserController(final CreateUserService theCreateUserService, final UpdateUserService theUpdateUserService,
+            final DeleteUserService theDeleteUserService) {
         this.createUserService = theCreateUserService;
         this.updateUserService = theUpdateUserService;
+        this.deleteUserService = theDeleteUserService;
     }
 
     /**
@@ -53,12 +62,32 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Method to update an existing user.
+     * @param userDTO the user DTO from the request body.
+     * @return the {@link UserResponse} result.
+     */
     @PostMapping("/update")
-    public final ResponseEntity<UserResponse> updateNewUser(@Valid @RequestBody final UserDTO userDTO) {
+    public final ResponseEntity<UserResponse> updateUser(@Valid @RequestBody final UserDTO userDTO) {
         logger.info("Updating user: " + userDTO.getUserId());
         UserResponse response = new UserResponse();
         response.setUserResult(updateUserService.updateUser(userDTO));
         logger.info("User updated: " + userDTO.getUserId());
+        return ResponseEntity.ok(response);
+    }
+
+
+    /**
+     * Method to delete an existing user.
+     * @param userDTO the user DTO from the request body.
+     * @return the {@link UserResponse} result.
+     */
+    @DeleteMapping("/delete")
+    public final ResponseEntity<UserResponse> deleteUser(@Valid @RequestBody final UserDTO userDTO) {
+        logger.info("Deleting user: " + userDTO.getUserId());
+        UserResponse response = new UserResponse();
+        response.setUserResult(deleteUserService.deleteUser(userDTO));
+        logger.info("User deleted: " + userDTO.getUserId());
         return ResponseEntity.ok(response);
     }
 }

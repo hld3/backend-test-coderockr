@@ -22,8 +22,8 @@ public class UserModelBuilder {
         return user;
     }
 
-    public UserModelBuilder withAllFields(UUID theUserId, String theFirstName, String theLastName,
-            long theCreationDate) {
+    public UserModelBuilder withAllFields(final UUID theUserId, final String theFirstName, final String theLastName,
+            final long theCreationDate) {
         this.userId = theUserId;
         this.firstName = theFirstName;
         this.lastName = theLastName;
