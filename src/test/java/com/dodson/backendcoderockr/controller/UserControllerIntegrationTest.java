@@ -43,20 +43,24 @@ public class UserControllerIntegrationTest {
 
     @Test
     void test_whenSendingValidUser_thenUserIsCreated() throws Exception {
-        UserDTO userDTO = new UserDTOBuilder().build();
+        UserDTO newUserDTO = new UserDTOBuilder().build();
 
-        mockMvc.perform(post("/user/create")
+        MvcResult mvcResult = mockMvc.perform(post("/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(userDTO)))
-                .andExpect(status().isOk());
+                .content(om.writeValueAsString(newUserDTO)))
+                .andExpect(status().isOk())
+                .andReturn();
 
-        UserModel result = userRepository.findByUserId(userDTO.getUserId());
+        UserModel createResult = userRepository.findByUserId(newUserDTO.getUserId());
+        assertNotNull(createResult);
+        assertEquals(createResult.getFirstName(), newUserDTO.getFirstName());
+        assertEquals(createResult.getLastName(), newUserDTO.getLastName());
+        assertEquals(createResult.getCreationDate(), newUserDTO.getCreationDate());
 
-        // TODO should check the response for the UserResult.
-        assertNotNull(result);
-        assertEquals(result.getFirstName(), userDTO.getFirstName());
-        assertEquals(result.getLastName(), userDTO.getLastName());
-        assertEquals(result.getCreationDate(), userDTO.getCreationDate());
+        UserResponse userResponse = om.readValue(mvcResult.getResponse().getContentAsString(), UserResponse.class);
+        UserResult userResult = userResponse.getUserResult();
+        assertEquals(userResult.getUserStatus(), UserStatus.CREATED);
+        assertEquals(userResult.getUserDTO(), newUserDTO);
     }
 
     @Test
@@ -66,38 +70,46 @@ public class UserControllerIntegrationTest {
                 originalDTO.getLastName(), originalDTO.getCreationDate()).build();
         userRepository.saveAndFlush(saveModel);
 
-        UserDTO updated = new UserDTOBuilder().withUserId(originalDTO.getUserId()).build();
+        UserDTO updateDTO = new UserDTOBuilder().withUserId(originalDTO.getUserId()).build();
 
-        mockMvc.perform(post("/user/update")
+        MvcResult mvcResult = mockMvc.perform(post("/user/update")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(updated)))
-                .andExpect(status().isOk());
+                .content(om.writeValueAsString(updateDTO)))
+                .andExpect(status().isOk())
+                .andReturn();
 
-        UserModel result = userRepository.findByUserId(updated.getUserId());
-
-        // TODO should check the response for the UserResult.
+        UserModel result = userRepository.findByUserId(updateDTO.getUserId());
         assertNotNull(result);
-        assertEquals(result.getFirstName(), updated.getFirstName());
-        assertEquals(result.getLastName(), updated.getLastName());
+        assertEquals(result.getFirstName(), updateDTO.getFirstName());
+        assertEquals(result.getLastName(), updateDTO.getLastName());
         assertEquals(result.getCreationDate(), originalDTO.getCreationDate());
+
+        UserResponse userResponse = om.readValue(mvcResult.getResponse().getContentAsString(), UserResponse.class);
+        UserResult userResult = userResponse.getUserResult();
+        assertEquals(userResult.getUserStatus(), UserStatus.UPDATED);
+        assertEquals(userResult.getUserDTO(), updateDTO);
     }
 
     @Test
     void test_whenUserDoesNotExist_thenUserIsCreated() throws Exception {
-        UserDTO updated = new UserDTOBuilder().build();
+        UserDTO updateDTO = new UserDTOBuilder().build();
 
-        mockMvc.perform(post("/user/update")
+        MvcResult mvcResult = mockMvc.perform(post("/user/update")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(updated)))
-                .andExpect(status().isOk());
+                .content(om.writeValueAsString(updateDTO)))
+                .andExpect(status().isOk())
+                .andReturn();
 
-        UserModel result = userRepository.findByUserId(updated.getUserId());
+        UserModel userModelResult = userRepository.findByUserId(updateDTO.getUserId());
+        assertNotNull(userModelResult);
+        assertEquals(userModelResult.getFirstName(), updateDTO.getFirstName());
+        assertEquals(userModelResult.getLastName(), updateDTO.getLastName());
+        assertEquals(userModelResult.getCreationDate(), updateDTO.getCreationDate());
 
-        // TODO should check the response for the UserResult.
-        assertNotNull(result);
-        assertEquals(result.getFirstName(), updated.getFirstName());
-        assertEquals(result.getLastName(), updated.getLastName());
-        assertEquals(result.getCreationDate(), updated.getCreationDate());
+        UserResponse userResponse = om.readValue(mvcResult.getResponse().getContentAsString(), UserResponse.class);
+        UserResult userResult = userResponse.getUserResult();
+        assertEquals(userResult.getUserStatus(), UserStatus.UPDATED);
+        assertEquals(userResult.getUserDTO(), updateDTO);
     }
 
     @Test
