@@ -1,5 +1,6 @@
 package com.dodson.backendcoderockr.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
 import com.dodson.backendcoderockr.service.CreateUserService;
+import com.dodson.backendcoderockr.service.DeleteUserService;
 import com.dodson.backendcoderockr.service.UpdateUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,6 +30,9 @@ public class UserControllerUnitTest {
 
     @Mock
     private UpdateUserService updateUserService;
+
+    @Mock
+    private DeleteUserService deleteUserService;
 
     @InjectMocks
     private UserController userController;
@@ -53,6 +58,16 @@ public class UserControllerUnitTest {
         UserDTO userDTO = new UserDTOBuilder().build();
 
         mockMvc.perform(post("/user/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(userDTO)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void test_whenSendingValidUserToDelete_thenUserIsDeleted() throws Exception {
+        UserDTO userDTO = new UserDTOBuilder().build();
+
+        mockMvc.perform(delete("/user/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(userDTO)))
                 .andExpect(status().isOk());

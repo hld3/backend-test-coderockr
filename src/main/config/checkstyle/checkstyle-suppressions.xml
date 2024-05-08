@@ -8,20 +8,25 @@
     <suppress checks="MagicNumber"
         files="UserModel.java"
         lines="39,45" />
+    <suppress checks="MagicNumber"
+        files="UserDTO.java"
+        lines="139" />
     <suppress checks="JavadocVariable"
         files="InvestmentModel.java" />
     <suppress checks="MissingJavadocMethod"
         files="BackendCoderockrApplication.java|InvestmentModel.java" />
     <suppress checks="MissingJavadocMethod"
         files="UpdateUserService.java"
-        lines="17" />
+        lines="26" />
     <suppress checks="MissingJavadocMethod"
         files="DeleteUserService.java"
-        lines="17" />
+        lines="26" />
     <suppress checks="HideUtilityClassConstructor"
         files="BackendCoderockrApplication.java" />
     <suppress checks="FinalParameters"
         files="BackendCoderockrApplication.java" />
+    <suppress checks="NeedBraces"
+        files="UserDTO.java" />
 
     <!-- Suppressed for all tests and builders -->
     <suppress checks="JavadocVariable|DesignForExtension|JavadocPackage|MagicNumber|MissingJavadocMethod"

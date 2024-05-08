@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
+import com.dodson.backendcoderockr.domain.dto.user.status.UserResult;
+import com.dodson.backendcoderockr.domain.dto.user.status.UserStatus;
 import com.dodson.backendcoderockr.domain.model.UserModel;
 import com.dodson.backendcoderockr.repository.UserRepository;
 
@@ -28,13 +30,19 @@ public class DeleteUserService {
     /**
      * Deletes the user.
      * @param userDTO the user to delete.
+     * @return the {@UserResult}.
      */
-    public void deleteUser(final UserDTO userDTO) {
+    public UserResult deleteUser(final UserDTO userDTO) {
         UserModel userModel = userRepository.findByUserId(userDTO.getUserId());
         if (userModel != null) {
             userRepository.delete(userModel);
         } else {
             logger.info("User not found for deletion: " + userDTO.getUserId());
         }
+
+        UserResult result = new UserResult();
+        result.setUserDTO(userDTO);
+        result.setUserStatus(UserStatus.DELETED);
+        return result;
     }
 }
