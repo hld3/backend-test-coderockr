@@ -61,6 +61,7 @@ public class UserControllerIntegrationTest {
         UserResult userResult = userResponse.getUserResult();
         assertEquals(userResult.getUserStatus(), UserStatus.CREATED);
         assertEquals(userResult.getUserDTO(), newUserDTO);
+        assertEquals(userResult.getMessage(), "User was created: " + newUserDTO.getUserId());
     }
 
     @Test
@@ -78,16 +79,17 @@ public class UserControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        UserModel result = userRepository.findByUserId(updateDTO.getUserId());
-        assertNotNull(result);
-        assertEquals(result.getFirstName(), updateDTO.getFirstName());
-        assertEquals(result.getLastName(), updateDTO.getLastName());
-        assertEquals(result.getCreationDate(), originalDTO.getCreationDate());
+        UserModel userModel = userRepository.findByUserId(updateDTO.getUserId());
+        assertNotNull(userModel);
+        assertEquals(userModel.getFirstName(), updateDTO.getFirstName());
+        assertEquals(userModel.getLastName(), updateDTO.getLastName());
+        assertEquals(userModel.getCreationDate(), originalDTO.getCreationDate());
 
         UserResponse userResponse = om.readValue(mvcResult.getResponse().getContentAsString(), UserResponse.class);
         UserResult userResult = userResponse.getUserResult();
         assertEquals(userResult.getUserStatus(), UserStatus.UPDATED);
         assertEquals(userResult.getUserDTO(), updateDTO);
+        assertEquals(userResult.getMessage(), "User was updated successfully: " + updateDTO.getUserId());
     }
 
     @Test
@@ -110,6 +112,7 @@ public class UserControllerIntegrationTest {
         UserResult userResult = userResponse.getUserResult();
         assertEquals(userResult.getUserStatus(), UserStatus.UPDATED);
         assertEquals(userResult.getUserDTO(), updateDTO);
+        assertEquals(userResult.getMessage(), "User did not exist, a new user was created: " + updateDTO.getUserId());
     }
 
     @Test
@@ -132,5 +135,23 @@ public class UserControllerIntegrationTest {
         UserResult userResult = userResponse.getUserResult();
         assertEquals(userResult.getUserStatus(), UserStatus.DELETED);
         assertEquals(userResult.getUserDTO(), originalDTO);
+        assertEquals(userResult.getMessage(), "User deleted successfully: " + originalDTO.getUserId());
+    }
+
+    @Test
+    void test_whenUserToDeleteIsMissing_thenNoUserIsDeleted() throws Exception {
+        UserDTO originalDTO = new UserDTOBuilder().build();
+
+        MvcResult mvcResult = mockMvc.perform(delete("/user/delete")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(originalDTO)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        UserResponse userResponse = om.readValue(mvcResult.getResponse().getContentAsString(), UserResponse.class);
+        UserResult userResult = userResponse.getUserResult();
+        assertEquals(userResult.getUserStatus(), UserStatus.NONE);
+        assertEquals(userResult.getUserDTO(), originalDTO);
+        assertEquals(userResult.getMessage(), "User was not found for deletion: " + originalDTO.getUserId());
     }
 }

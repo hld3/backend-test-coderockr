@@ -9,6 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UserResult {
 
         /**
+         * The message to return.
+         */
+        @JsonProperty
+        private String message;
+
+        /**
          * The user status enum value.
          */
         @JsonProperty
@@ -19,6 +25,22 @@ public class UserResult {
          */
         @JsonProperty
         private UserDTO userDTO;
+
+        /**
+         * Gets the message.
+         * @return the message.
+         */
+        public String getMessage() {
+                return message;
+        }
+
+        /**
+         * Sets the message.
+         * @param newMessage the message to set.
+         */
+        public void setMessage(final String newMessage) {
+                this.message = newMessage;
+        }
 
         /**
          * Gets the user status enum value.

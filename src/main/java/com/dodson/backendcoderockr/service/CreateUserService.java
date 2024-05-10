@@ -11,31 +11,32 @@ import com.dodson.backendcoderockr.repository.UserRepository;
 @Service
 public class CreateUserService {
 
-        /**
-         * Repository to save users to.
-         */
-        private UserRepository userRepository;
+    /**
+     * Repository to save users to.
+     */
+    private UserRepository userRepository;
 
-        CreateUserService(final UserRepository theUserRepository) {
-                this.userRepository = theUserRepository;
-        }
+    CreateUserService(final UserRepository theUserRepository) {
+        this.userRepository = theUserRepository;
+    }
 
-        /**
-         * Saves a user to the database.
-         * @param userDTO the user DTO with the user data.
-         * @return the {@link UserResult} with the user and creation status.
-         */
-        public final UserResult createNewUser(final UserDTO userDTO) {
-                UserModel userModel = new UserModel();
-                userModel.setUserId(userDTO.getUserId());
-                userModel.setFirstName(userDTO.getFirstName());
-                userModel.setLastName(userDTO.getLastName());
-                userModel.setCreationDate(userDTO.getCreationDate());
-                userRepository.save(userModel);
+    /**
+     * Saves a user to the database.
+     * @param userDTO the user DTO with the user data.
+     * @return the {@link UserResult} with the user and creation status.
+     */
+    public final UserResult createNewUser(final UserDTO userDTO) {
+        UserModel userModel = new UserModel();
+        userModel.setUserId(userDTO.getUserId());
+        userModel.setFirstName(userDTO.getFirstName());
+        userModel.setLastName(userDTO.getLastName());
+        userModel.setCreationDate(userDTO.getCreationDate());
+        userRepository.save(userModel);
 
-                UserResult result = new UserResult();
-                result.setUserDTO(userDTO);
-                result.setUserStatus(UserStatus.CREATED);
-                return result;
-        }
+        UserResult result = new UserResult();
+        result.setUserDTO(userDTO);
+        result.setUserStatus(UserStatus.CREATED);
+        result.setMessage("User was created: " + userDTO.getUserId());
+        return result;
+    }
 }

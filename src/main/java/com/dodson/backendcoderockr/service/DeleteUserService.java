@@ -34,15 +34,19 @@ public class DeleteUserService {
      */
     public UserResult deleteUser(final UserDTO userDTO) {
         UserModel userModel = userRepository.findByUserId(userDTO.getUserId());
+        UserResult result = new UserResult();
+
         if (userModel != null) {
             userRepository.delete(userModel);
+            result.setMessage("User deleted successfully: " + userDTO.getUserId());
+            result.setUserStatus(UserStatus.DELETED);
         } else {
-            logger.info("User not found for deletion: " + userDTO.getUserId());
+            logger.info("User was not found for deletion: " + userDTO.getUserId());
+            result.setMessage("User was not found for deletion: " + userDTO.getUserId());
+            result.setUserStatus(UserStatus.NONE);
         }
 
-        UserResult result = new UserResult();
         result.setUserDTO(userDTO);
-        result.setUserStatus(UserStatus.DELETED);
         return result;
     }
 }
