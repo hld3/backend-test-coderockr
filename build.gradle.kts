@@ -1,6 +1,7 @@
 plugins {
 	java
 	checkstyle
+    kotlin("jvm") version "1.9.24"
 	id("org.springframework.boot") version "3.2.4"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.asciidoctor.jvm.convert") version "3.3.2"
@@ -20,6 +21,7 @@ repositories {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	// implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -33,6 +35,12 @@ dependencies {
 	testImplementation("com.github.javafaker:javafaker:1.0.2") {
 		exclude(group = "org.yaml", module = "snakeyaml")
 	}
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 tasks.withType<Test> {
