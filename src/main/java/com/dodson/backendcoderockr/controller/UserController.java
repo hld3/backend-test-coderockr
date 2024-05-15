@@ -1,5 +1,6 @@
 package com.dodson.backendcoderockr.controller;
 
+import com.dodson.backendcoderockr.service.CreateUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.response.UserResponse;
-import com.dodson.backendcoderockr.service.CreateUserService;
 import com.dodson.backendcoderockr.service.DeleteUserService;
 import com.dodson.backendcoderockr.service.UpdateUserService;
 
@@ -42,7 +42,7 @@ public class UserController {
     private DeleteUserService deleteUserService;
 
     UserController(final CreateUserService theCreateUserService, final UpdateUserService theUpdateUserService,
-            final DeleteUserService theDeleteUserService) {
+                   final DeleteUserService theDeleteUserService) {
         this.createUserService = theCreateUserService;
         this.updateUserService = theUpdateUserService;
         this.deleteUserService = theDeleteUserService;
