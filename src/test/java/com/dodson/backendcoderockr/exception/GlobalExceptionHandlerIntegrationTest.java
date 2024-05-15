@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.dodson.backendcoderockr.controller.UserController;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
-import com.dodson.backendcoderockr.service.CreateUserService;
+import com.dodson.backendcoderockr.service.CreateUserServiceK;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -28,7 +28,7 @@ public class GlobalExceptionHandlerIntegrationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CreateUserService createUserService;
+    private CreateUserServiceK createUserService;
 
     @MockBean
     private UserController userController;
