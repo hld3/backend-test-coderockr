@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.dto.user.UserDTOBuilder;
-import com.dodson.backendcoderockr.service.CreateUserServiceK;
+import com.dodson.backendcoderockr.service.CreateUserService;
 import com.dodson.backendcoderockr.service.DeleteUserService;
 import com.dodson.backendcoderockr.service.UpdateUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +26,7 @@ public class UserControllerUnitTest {
     private MockMvc mockMvc;
 
     @Mock
-    private CreateUserServiceK createUserService;
+    private CreateUserService createUserService;
 
     @Mock
     private UpdateUserService updateUserService;

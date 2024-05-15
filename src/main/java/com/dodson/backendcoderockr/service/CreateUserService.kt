@@ -8,7 +8,7 @@ import com.dodson.backendcoderockr.repository.UserRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CreateUserServiceK(private val userRepository: UserRepository) {
+class CreateUserService(private val userRepository: UserRepository) {
 
     fun createNewUser(userDTO: UserDTO): UserResult {
         val userModel = UserModel()

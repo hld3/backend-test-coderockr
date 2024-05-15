@@ -1,6 +1,6 @@
 package com.dodson.backendcoderockr.controller;
 
-import com.dodson.backendcoderockr.service.CreateUserServiceK;
+import com.dodson.backendcoderockr.service.CreateUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class UserController {
     /**
      * The service to create a user to save to the database.
      */
-    private CreateUserServiceK createUserService;
+    private CreateUserService createUserService;
 
     /**
      * The service to update a user in the database.
@@ -41,8 +41,8 @@ public class UserController {
      */
     private DeleteUserService deleteUserService;
 
-    UserController(final CreateUserServiceK theCreateUserService, final UpdateUserService theUpdateUserService,
-            final DeleteUserService theDeleteUserService) {
+    UserController(final CreateUserService theCreateUserService, final UpdateUserService theUpdateUserService,
+                   final DeleteUserService theDeleteUserService) {
         this.createUserService = theCreateUserService;
         this.updateUserService = theUpdateUserService;
         this.deleteUserService = theDeleteUserService;
