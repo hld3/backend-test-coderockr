@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class CreateUserService(private val userRepository: UserRepository) {
-
     fun createNewUser(userDTO: UserDTO): UserResult {
         val userModel = UserModel()
         userModel.userId = userDTO.userId
