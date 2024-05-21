@@ -26,6 +26,14 @@ public class UserResult {
         @JsonProperty
         private UserDTO userDTO;
 
+        public UserResult() {}
+
+        public UserResult(UserDTO theUserDTO, UserStatus theUserStatus, String theMessage) {
+                this.userDTO = theUserDTO;
+                this.userStatus = theUserStatus;
+                this.message = theMessage;
+        }
+
         /**
          * Gets the message.
          * @return the message.

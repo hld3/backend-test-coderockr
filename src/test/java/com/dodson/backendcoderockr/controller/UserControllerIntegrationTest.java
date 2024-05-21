@@ -135,7 +135,7 @@ public class UserControllerIntegrationTest {
         UserResult userResult = userResponse.getUserResult();
         assertEquals(userResult.getUserStatus(), UserStatus.DELETED);
         assertEquals(userResult.getUserDTO(), originalDTO);
-        assertEquals(userResult.getMessage(), "User deleted successfully: " + originalDTO.getUserId());
+        assertEquals(userResult.getMessage(), "User was deleted successfully.");
     }
 
     @Test
@@ -152,6 +152,6 @@ public class UserControllerIntegrationTest {
         UserResult userResult = userResponse.getUserResult();
         assertEquals(userResult.getUserStatus(), UserStatus.NONE);
         assertEquals(userResult.getUserDTO(), originalDTO);
-        assertEquals(userResult.getMessage(), "User was not found for deletion: " + originalDTO.getUserId());
+        assertEquals(userResult.getMessage(), "User was not found for deletion.");
     }
 }
