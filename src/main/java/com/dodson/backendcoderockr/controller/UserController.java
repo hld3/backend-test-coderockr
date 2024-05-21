@@ -1,6 +1,7 @@
 package com.dodson.backendcoderockr.controller;
 
 import com.dodson.backendcoderockr.service.CreateUserService;
+import com.dodson.backendcoderockr.service.DeleteUserService;
 import com.dodson.backendcoderockr.service.UpdateUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dodson.backendcoderockr.domain.dto.user.UserDTO;
 import com.dodson.backendcoderockr.domain.response.UserResponse;
-import com.dodson.backendcoderockr.service.DeleteUserService;
 
 import jakarta.validation.Valid;
 

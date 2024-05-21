@@ -17,17 +17,21 @@ class UpdateUserService(private val userRepository: UserRepository) {
         return UserResult().apply {
             userDTO = user
             userStatus = UserStatus.UPDATED
-            message = if (toUpdate != null) {
-                updateExistingUser(toUpdate, userDTO)
-                "User was updated successfully: ${user.userId}"
-            } else {
-                createNewUser(user)
-                "User did not exist, a new user was created: ${user.userId}"
-            }
+            message =
+                if (toUpdate != null) {
+                    updateExistingUser(toUpdate, userDTO)
+                    "User was updated successfully: ${user.userId}"
+                } else {
+                    createNewUser(user)
+                    "User did not exist, a new user was created: ${user.userId}"
+                }
         }
     }
 
-    private fun updateExistingUser(userModel: UserModel, userDTO: UserDTO) {
+    private fun updateExistingUser(
+        userModel: UserModel,
+        userDTO: UserDTO,
+    ) {
         userModel.apply {
             firstName = userDTO.firstName
             lastName = userDTO.lastName
@@ -37,12 +41,13 @@ class UpdateUserService(private val userRepository: UserRepository) {
     }
 
     private fun createNewUser(userDTO: UserDTO) {
-        val userModel = UserModel().apply {
-            userId = userDTO.userId
-            firstName = userDTO.firstName
-            lastName = userDTO.lastName
-            creationDate = userDTO.creationDate
-        }
+        val userModel =
+            UserModel().apply {
+                userId = userDTO.userId
+                firstName = userDTO.firstName
+                lastName = userDTO.lastName
+                creationDate = userDTO.creationDate
+            }
         userRepository.save(userModel)
         logger.info("Could not update, the user: ${userDTO.userId} does not exist. Creating a new user.")
     }
