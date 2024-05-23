@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.dodson.backendcoderockr.service.DeleteUserService;
+import com.dodson.backendcoderockr.service.UpdateUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,6 +27,12 @@ public class GlobalExceptionHandlerUnitTest {
 
     @Mock
     private CreateUserService createUserService;
+
+    @Mock
+    private UpdateUserService updateUserService;
+
+    @Mock
+    private DeleteUserService deleteUserService;
 
     @InjectMocks
     private UserController userController;
